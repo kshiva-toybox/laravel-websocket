@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatCommentSended;
 use App\Http\Requests\Stream\PostCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\StreamResource;
@@ -28,12 +29,14 @@ class StreamController extends Controller
 
     public function postComment(Stream $stream, PostCommentRequest $request)
     {
-        $stream->comments()->create([
-            'nickname' => $request->nickname,
-            'body' => $request->body,
-        ]);
-        return response()->json([
-            'message' => 'Comment posted successfully',
-        ]);
+        $comment = new Comment();
+        $comment->nickname = $request->nickname;
+        $comment->body = $request->body;
+        $comment->stream_id = $stream->id;
+        $comment->save();
+
+        ChatCommentSended::dispatch($comment);
+
+        return new CommentResource($comment);
     }
 }
