@@ -22,4 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('/streams')->group(function () {
     Route::get('', [StreamController::class, 'index']);
     Route::get('/{stream}', [StreamController::class, 'show']);
+    Route::get('/{stream}/comments', [StreamController::class, 'comments']);
+    Route::post('/{stream}/comments', [StreamController::class, 'postComment']);
 });
