@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\ChatCommentSended;
+use App\Events\ChatLiked;
 use App\Http\Requests\Stream\PostCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\StreamResource;
@@ -38,5 +39,15 @@ class StreamController extends Controller
         ChatCommentSended::dispatch($comment);
 
         return new CommentResource($comment);
+    }
+
+    public function like(Stream $stream)
+    {
+        $stream->like++;
+        $stream->save();
+
+        ChatLiked::dispatch($stream);
+
+        return new StreamResource($stream);
     }
 }

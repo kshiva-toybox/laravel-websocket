@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('streams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('like')->default(0);
             $table->timestamps();
         });
     }

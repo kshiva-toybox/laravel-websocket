@@ -17,6 +17,7 @@ class StreamResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'like' => $this->like,
         ];
     }
 }

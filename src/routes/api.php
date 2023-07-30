@@ -24,4 +24,5 @@ Route::prefix('/streams')->group(function () {
     Route::get('/{stream}', [StreamController::class, 'show']);
     Route::get('/{stream}/comments', [StreamController::class, 'comments']);
     Route::post('/{stream}/comments', [StreamController::class, 'postComment']);
+    Route::post('/{stream}/like', [StreamController::class, 'like']);
 });
